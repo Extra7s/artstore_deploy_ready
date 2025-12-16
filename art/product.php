@@ -24,8 +24,11 @@ $recResult = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($art['title']) ?> | ArtfyCanvas</title>
+    <meta name="description" content="<?= htmlspecialchars(substr($art['description'], 0, 160)) ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -47,47 +50,163 @@ $recResult = $stmt->get_result();
 </header>
 
 <section class="product-section">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.php">Home</a> >
+        <a href="shop.php">Shop</a> >
+        <span><?= htmlspecialchars($art['title']) ?></span>
+    </div>
+
     <div class="product-container">
-        <div class="product-image">
-            <?php
-            $imagePath = "assets/images/" . $art['image'];
-            if (!file_exists($imagePath)) {
-                $imagePath = "assets/images/default.jpg";
-            }
-            ?>
-            <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($art['title']) ?>">
+        <div class="product-gallery">
+            <div class="product-image">
+                <?php
+                $imagePath = "assets/images/" . $art['image'];
+                if (!file_exists($imagePath)) {
+                    $imagePath = "assets/images/default.jpg";
+                }
+                ?>
+                <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($art['title']) ?>" id="main-image">
+            </div>
         </div>
+
         <div class="product-details">
-            <h2><?= htmlspecialchars($art['title']) ?></h2>
-            <p class="artist">By <?= htmlspecialchars($art['artist']) ?></p>
-            <p class="category">Category: <?= htmlspecialchars($art['category_name']) ?></p>
-            <p class="description"><?= htmlspecialchars($art['description']) ?></p>
-            <p class="price">Rs. <?= number_format($art['price'], 2) ?></p>
-            <form action="actions/add_to_cart.php" method="POST">
-                <input type="hidden" name="artwork_id" value="<?= $art['id'] ?>">
-                <input type="number" name="qty" value="1" min="1" required>
-                <button type="submit" class="btn">Add to Cart</button>
-            </form>
+            <div class="product-header">
+                <h1><?= htmlspecialchars($art['title']) ?></h1>
+                <div class="product-meta">
+                    <span class="artist-info">
+                        <i class="fas fa-user"></i>
+                        By <strong><?= htmlspecialchars($art['artist']) ?></strong>
+                    </span>
+                    <span class="category-badge">
+                        <i class="fas fa-tag"></i>
+                        <?= htmlspecialchars($art['category_name']) ?>
+                    </span>
+                </div>
+            </div>
+
+            <div class="product-price">
+                <span class="current-price">Rs. <?= number_format($art['price'], 2) ?></span>
+            </div>
+
+            <div class="product-description">
+                <h3>About This Artwork</h3>
+                <p><?= htmlspecialchars($art['description']) ?></p>
+            </div>
+
+            <div class="product-specifications">
+                <h3>Specifications</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">Artist:</span>
+                        <span class="spec-value"><?= htmlspecialchars($art['artist']) ?></span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Category:</span>
+                        <span class="spec-value"><?= htmlspecialchars($art['category_name']) ?></span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Medium:</span>
+                        <span class="spec-value">Oil on Canvas</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Year:</span>
+                        <span class="spec-value">2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="purchase-section">
+                <div class="quantity-selector">
+                    <label for="quantity">Quantity:</label>
+                    <div class="quantity-controls">
+                        <button type="button" class="qty-btn" onclick="changeQuantity(-1)">-</button>
+                        <input type="number" id="quantity" name="qty" value="1" min="1" max="10" readonly>
+                        <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
+                    </div>
+                </div>
+
+                <form action="actions/add_to_cart.php" method="POST" class="add-to-cart-form">
+                    <input type="hidden" name="artwork_id" value="<?= $art['id'] ?>">
+                    <input type="hidden" name="qty" value="1" id="hidden-qty">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-shopping-cart"></i>
+                        Add to Cart
+                    </button>
+                </form>
+
+                <div class="action-buttons">
+                    <button class="btn-secondary" onclick="toggleWishlist()">
+                        <i class="far fa-heart"></i>
+                        Add to Wishlist
+                    </button>
+                    <button class="btn-secondary" onclick="shareProduct()">
+                        <i class="fas fa-share"></i>
+                        Share
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-features">
+                <div class="feature">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Free Shipping</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-undo"></i>
+                    <span>30-Day Returns</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-certificate"></i>
+                    <span>Certificate of Authenticity</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Recommendations -->
-    <div class="recommendations">
-        <h3>You Might Also Like</h3>
+    <div class="related-products">
+        <div class="section-header">
+            <h2>You Might Also Like</h2>
+            <p>Discover more beautiful artworks from our collection</p>
+        </div>
         <div class="art-grid">
-            <?php while ($rec = $recResult->fetch_assoc()): 
+            <?php while ($rec = $recResult->fetch_assoc()):
                 $recImagePath = "assets/images/" . $rec['image'];
                 if (!file_exists($recImagePath)) {
                     $recImagePath = "assets/images/default.jpg";
                 }
             ?>
                 <div class="art-card">
-                    <img src="<?= $recImagePath ?>" alt="<?= htmlspecialchars($rec['title']) ?>">
+                    <div class="art-image">
+                        <img src="<?= $recImagePath ?>" alt="<?= htmlspecialchars($rec['title']) ?>">
+                        <div class="art-overlay">
+                            <a href="product.php?id=<?= $rec['id'] ?>" class="view-details-btn">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </a>
+                        </div>
+                    </div>
                     <div class="art-info">
-                        <h3><?= htmlspecialchars($rec['title']) ?></h3>
-                        <p class="artist"><?= htmlspecialchars($rec['artist']) ?></p>
-                        <p class="price">Rs. <?= number_format($rec['price'], 2) ?></p>
-                        <a href="product.php?id=<?= $rec['id'] ?>" class="btn-sm">View Details</a>
+                        <h3>
+                            <a href="product.php?id=<?= $rec['id'] ?>">
+                                <?= htmlspecialchars($rec['title']) ?>
+                            </a>
+                        </h3>
+                        <p class="artist">
+                            <i class="fas fa-user"></i>
+                            <?= htmlspecialchars($rec['artist']) ?>
+                        </p>
+                        <div class="art-footer">
+                            <p class="price">Rs. <?= number_format($rec['price'], 2) ?></p>
+                            <form action="actions/add_to_cart.php" method="POST" class="quick-add">
+                                <input type="hidden" name="artwork_id" value="<?= $rec['id'] ?>">
+                                <input type="hidden" name="qty" value="1">
+                                <button type="submit" class="quick-add-btn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -125,6 +244,44 @@ $recResult = $stmt->get_result();
     </div>
     <p>© <?= date("Y") ?> ArtfyCanvas. All Rights Reserved.</p>
 </footer>
+
+<script>
+function changeQuantity(delta) {
+    const qtyInput = document.getElementById('quantity');
+    const hiddenQty = document.getElementById('hidden-qty');
+    let currentQty = parseInt(qtyInput.value);
+    currentQty += delta;
+    if (currentQty >= 1 && currentQty <= 10) {
+        qtyInput.value = currentQty;
+        hiddenQty.value = currentQty;
+    }
+}
+
+function toggleWishlist() {
+    // Placeholder for wishlist functionality
+    alert('Wishlist feature coming soon!');
+}
+
+function shareProduct() {
+    if (navigator.share) {
+        navigator.share({
+            title: '<?= htmlspecialchars($art['title']) ?>',
+            text: 'Check out this beautiful artwork by <?= htmlspecialchars($art['artist']) ?>',
+            url: window.location.href
+        });
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Link copied to clipboard!');
+        });
+    }
+}
+
+// Update hidden quantity when input changes
+document.getElementById('quantity').addEventListener('change', function() {
+    document.getElementById('hidden-qty').value = this.value;
+});
+</script>
 
 </body>
 </html>
