@@ -69,7 +69,7 @@ if (!$order) {
 
             <div class="payment-option">
                 <button id="khalti-payment-button" class="btn khalti-btn">
-                    <img src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-logo.png" alt="Khalti" style="height: 30px; margin-right: 10px;">
+                    <img src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-logo.png" alt="Khalti" class="khalti-logo">
                     Pay with Khalti
                 </button>
             </div>

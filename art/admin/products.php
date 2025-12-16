@@ -111,30 +111,6 @@ $categories_result = $conn->query("SELECT * FROM categories ORDER BY name");
         };
         <?php endif; ?>
     </script>
-    <style>
-        .admin-section { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .admin-content { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .admin-form input, .admin-form select, .admin-form textarea { padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
-        .admin-form textarea { grid-column: 1 / -1; min-height: 80px; resize: vertical; }
-        .admin-form button { padding: 12px; background: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        .admin-form button:hover { background: #34495e; }
-        .admin-form button[name="edit"] { background: #27ae60; }
-        .admin-form button[name="edit"]:hover { background: #2ecc71; }
-        .btn-cancel { padding: 12px; background: #95a5a6; color: white; text-decoration: none; border-radius: 4px; font-size: 16px; display: inline-block; text-align: center; }
-        .btn-cancel:hover { background: #7f8c8d; }
-        .admin-item { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px; background: #f9f9f9; }
-        .admin-item h3 { margin: 0 0 10px 0; color: #2c3e50; }
-        .admin-item p { margin: 5px 0; color: #666; }
-        .admin-actions { margin-top: 10px; }
-        .admin-actions a { color: #e74c3c; text-decoration: none; margin-right: 15px; }
-        .admin-actions a:hover { text-decoration: underline; }
-        .message { padding: 10px; margin-bottom: 20px; border-radius: 4px; }
-        .message.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .message.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .product-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
-        .product-image { max-width: 100px; height: auto; border-radius: 4px; }
-    </style>
 </head>
 <body>
 
@@ -194,7 +170,7 @@ $categories_result = $conn->query("SELECT * FROM categories ORDER BY name");
 
             <?php if($editing_product): ?>
                 <input type="hidden" name="edit_id" value="<?= $editing_product['id'] ?>">
-                <button name="edit" type="submit" style="background: #27ae60;"><i class="fas fa-save"></i> Update Product</button>
+                <button name="edit" type="submit"><i class="fas fa-save"></i> Update Product</button>
                 <a href="products.php" class="btn-cancel"><i class="fas fa-times"></i> Cancel</a>
             <?php else: ?>
                 <button name="add" type="submit"><i class="fas fa-plus"></i> Add Product</button>
@@ -209,7 +185,7 @@ $categories_result = $conn->query("SELECT * FROM categories ORDER BY name");
             <div class="admin-item">
                 <h3>
                     <?= htmlspecialchars($product['title']) ?> by <?= htmlspecialchars($product['artist']) ?>
-                    <span style="font-size: 14px; color: #666;">($<?= number_format($product['price'], 2) ?>)</span>
+                    <span class="product-price">($<?= number_format($product['price'], 2) ?>)</span>
                 </h3>
 
                 <div class="product-details">
@@ -234,7 +210,7 @@ $categories_result = $conn->query("SELECT * FROM categories ORDER BY name");
                     <?php endif; ?>
 
                     <div><strong>Status:</strong>
-                        <span style="color: <?= $product['availability'] === 'available' ? '#27ae60' : ($product['availability'] === 'sold' ? '#e74c3c' : '#f39c12') ?>">
+                        <span class="status-<?= $product['availability'] ?>">
                             <?= ucfirst($product['availability']) ?>
                         </span>
                     </div>
@@ -247,10 +223,10 @@ $categories_result = $conn->query("SELECT * FROM categories ORDER BY name");
                 <?php endif; ?>
 
                 <div class="admin-actions">
-                    <a href="?edit=<?= $product['id'] ?>" style="color: #3498db; margin-right: 15px;">
+                    <a href="?edit=<?= $product['id'] ?>" class="edit-link">
                         <i class="fas fa-edit"></i> Edit
                     </a>
-                    <a href="?del=<?= $product['id'] ?>" onclick="return confirm('Are you sure you want to delete this product?')" style="color: #e74c3c;">
+                    <a href="?del=<?= $product['id'] ?>" onclick="return confirm('Are you sure you want to delete this product?')">
                         <i class="fas fa-trash"></i> Delete
                     </a>
                 </div>

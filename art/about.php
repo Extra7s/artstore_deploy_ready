@@ -232,10 +232,10 @@ function toggleMobileMenu() {
 
     if (mobileMenu.classList.contains('active')) {
         mobileMenu.classList.remove('active');
-        menuToggle.innerHTML = '<span></span><span></span><span></span>';
+        menuToggle.classList.remove('active');
     } else {
         mobileMenu.classList.add('active');
-        menuToggle.innerHTML = '<span style="transform: rotate(45deg) translate(5px, 5px);"></span><span style="opacity: 0;"></span><span style="transform: rotate(-45deg) translate(7px, -6px);"></span>';
+        menuToggle.classList.add('active');
     }
 }
 

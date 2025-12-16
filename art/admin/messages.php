@@ -40,7 +40,7 @@ $r = $stmt->get_result();
     </div>
 </section>
 
-<div style="text-align: center; margin: 20px;">
+<div class="center-back">
     <a href="dashboard.php" class="btn">Back to Dashboard</a>
 </div>
 

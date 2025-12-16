@@ -100,7 +100,7 @@ if (isset($_SESSION['user'])) {
                         <h3><?= $item['artwork']['title'] ?></h3>
                         <p>Artist: <?= $item['artwork']['artist'] ?></p>
                         <div class="quantity-controls">
-                            <form method="POST" action="actions/update_cart.php" style="display: inline;">
+                            <form method="POST" action="actions/update_cart.php" class="update-cart-form">
                                 <input type="hidden" name="id" value="<?= $item['artwork']['id'] ?>">
                                 <button type="submit" name="action" value="decrease">-</button>
                                 <input type="number" name="qty" value="<?= $item['qty'] ?>" min="1" readonly>
@@ -159,10 +159,10 @@ function toggleMobileMenu() {
 
     if (mobileMenu.classList.contains('active')) {
         mobileMenu.classList.remove('active');
-        menuToggle.innerHTML = '<span></span><span></span><span></span>';
+        menuToggle.classList.remove('active');
     } else {
         mobileMenu.classList.add('active');
-        menuToggle.innerHTML = '<span style="transform: rotate(45deg) translate(5px, 5px);"></span><span style="opacity: 0;"></span><span style="transform: rotate(-45deg) translate(7px, -6px);"></span>';
+        menuToggle.classList.add('active');
     }
 }
 
