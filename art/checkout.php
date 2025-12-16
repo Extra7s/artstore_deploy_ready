@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Create order
     $stmt = $conn->prepare("INSERT INTO orders (user_id, total, address, phone, payment_method, payment_status, created_at) VALUES (?, ?, ?, ?, 'khalti', 'pending', NOW())");
-    $stmt->bind_param("idsss", $user_id, $total, $address, $phone);
+    $stmt->bind_param("idss", $user_id, $total, $address, $phone);
     $stmt->execute();
     $order_id = $conn->insert_id;
 

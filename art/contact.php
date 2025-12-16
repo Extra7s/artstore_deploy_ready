@@ -95,9 +95,9 @@
             
             <h3>Follow Us</h3>
             <div class="social-links">
-                <a href="#" title="Facebook">📘</a>
-                <a href="#" title="Instagram">📷</a>
-                <a href="#" title="Twitter">🐦</a>
+                <a href="#" title="Facebook" class="fab fa-facebook"></a>
+                <a href="#" title="Instagram" class="fab fa-instagram"></a>
+                <a href="#" title="Twitter" class="fab fa-twitter"></a>
             </div>
         </div>
     </div>
