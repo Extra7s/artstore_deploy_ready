@@ -17,17 +17,18 @@ $messages = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM messages")
     <title>Admin Dashboard | ArtfyCanvas</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
 <header class="navbar">
     <div class="logo">ArtfyCanvas - Admin</div>
     <nav>
-        <a href="dashboard.php">Dashboard</a>
-        <a href="products.php">Products</a>
-        <a href="orders.php">Orders</a>
-        <a href="messages.php">Messages</a>
-        <a href="../logout.php">Logout</a>
+        <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="products.php"><i class="fas fa-box"></i> Products</a>
+        <a href="orders.php"><i class="fas fa-shopping-cart"></i> Orders</a>
+        <a href="messages.php"><i class="fas fa-envelope"></i> Messages</a>
+        <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 </header>
 

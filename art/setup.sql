@@ -37,6 +37,10 @@ CREATE TABLE IF NOT EXISTS artworks (
     image VARCHAR(255),
     description TEXT,
     category_id INT DEFAULT NULL,
+    medium VARCHAR(100) DEFAULT NULL,
+    dimensions VARCHAR(100) DEFAULT NULL,
+    year_created YEAR DEFAULT NULL,
+    availability ENUM('available', 'sold', 'reserved') DEFAULT 'available',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );

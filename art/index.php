@@ -7,33 +7,63 @@ require_once "includes/db.php";
 <head>
     <meta charset="UTF-8">
     <title>ArtfyCanvas | Buy Original Art</title>
+    <meta name="description" content="Discover and buy original artworks from talented artists worldwide. Premium art collection with secure checkout.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
 <!-- ================= NAVBAR ================= -->
 <header class="navbar">
-    <div class="logo">ArtfyCanvas</div>
+    <div class="logo">
+        <i class="fas fa-palette"></i>
+        ArtfyCanvas
+    </div>
 
     <nav>
-        
-        <a href="index.php">Home</a>
-        <a href="shop.php">Shop</a>
-        <a href="about.php">About</a>
-        <a href="contact.php">Contact</a>
+        <a href="index.php"><i class="fas fa-home"></i> Home</a>
+        <a href="shop.php"><i class="fas fa-store"></i> Shop</a>
+        <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
+        <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
 
         <?php if(isset($_SESSION['user'])): ?>
-            <a href="cart.php">Cart</a>
-            <a href="logout.php">Logout</a>
+            <a href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php else: ?>
-            <a href="login.php">Login</a>
+            <a href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a>
         <?php endif; ?>
     </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" onclick="toggleMobileMenu()">&times;</div>
+        <a href="index.php" onclick="toggleMobileMenu()"><i class="fas fa-home"></i> Home</a>
+        <a href="shop.php" onclick="toggleMobileMenu()"><i class="fas fa-store"></i> Shop</a>
+        <a href="about.php" onclick="toggleMobileMenu()"><i class="fas fa-info-circle"></i> About</a>
+        <a href="contact.php" onclick="toggleMobileMenu()"><i class="fas fa-envelope"></i> Contact</a>
+
+        <?php if(isset($_SESSION['user'])): ?>
+            <a href="cart.php" onclick="toggleMobileMenu()"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="logout.php" onclick="toggleMobileMenu()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <?php else: ?>
+            <a href="login.php" onclick="toggleMobileMenu()"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <?php endif; ?>
+    </div>
 </header>
 
 <!-- ================= HERO SECTION ================= -->
@@ -211,6 +241,40 @@ require_once "includes/db.php";
     </div>
     <p>© <?= date("Y") ?> ArtfyCanvas. All Rights Reserved.</p>
 </footer>
+
+<script>
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.querySelector('.menu-toggle');
+
+    if (mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        menuToggle.innerHTML = '<span></span><span></span><span></span>';
+    } else {
+        mobileMenu.classList.add('active');
+        menuToggle.innerHTML = '<span style="transform: rotate(45deg) translate(5px, 5px);"></span><span style="opacity: 0;"></span><span style="transform: rotate(-45deg) translate(7px, -6px);"></span>';
+    }
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbar = document.querySelector('.navbar');
+
+    if (!navbar.contains(event.target) && mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
+});
+
+// Close mobile menu on window resize if desktop size
+window.addEventListener('resize', function() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
+});
+</script>
 
 </body>
 </html>

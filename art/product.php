@@ -34,19 +34,45 @@ $recResult = $stmt->get_result();
 
 <!-- ================= NAVBAR ================= -->
 <header class="navbar">
-    <div class="logo">ArtfyCanvas</div>
+    <div class="logo">
+        <i class="fas fa-palette"></i>
+        ArtfyCanvas
+    </div>
     <nav>
-        <a href="index.php">Home</a>
-        <a href="shop.php">Shop</a>
-        <a href="about.php">About</a>
-        <a href="contact.php">Contact</a>
+        <a href="index.php"><i class="fas fa-home"></i> Home</a>
+        <a href="shop.php"><i class="fas fa-store"></i> Shop</a>
+        <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
+        <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
         <?php if(isset($_SESSION['user'])): ?>
-            <a href="cart.php">Cart</a>
-            <a href="logout.php">Logout</a>
+            <a href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php else: ?>
-            <a href="login.php">Login</a>
+            <a href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a>
         <?php endif; ?>
     </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" onclick="toggleMobileMenu()">&times;</div>
+        <a href="index.php" onclick="toggleMobileMenu()"><i class="fas fa-home"></i> Home</a>
+        <a href="shop.php" onclick="toggleMobileMenu()"><i class="fas fa-store"></i> Shop</a>
+        <a href="about.php" onclick="toggleMobileMenu()"><i class="fas fa-info-circle"></i> About</a>
+        <a href="contact.php" onclick="toggleMobileMenu()"><i class="fas fa-envelope"></i> Contact</a>
+
+        <?php if(isset($_SESSION['user'])): ?>
+            <a href="cart.php" onclick="toggleMobileMenu()"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="logout.php" onclick="toggleMobileMenu()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <?php else: ?>
+            <a href="login.php" onclick="toggleMobileMenu()"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <?php endif; ?>
+    </div>
 </header>
 
 <section class="product-section">
@@ -280,6 +306,39 @@ function shareProduct() {
 // Update hidden quantity when input changes
 document.getElementById('quantity').addEventListener('change', function() {
     document.getElementById('hidden-qty').value = this.value;
+});
+
+// Mobile Menu Functions
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.querySelector('.menu-toggle');
+
+    if (mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        menuToggle.innerHTML = '<span></span><span></span><span></span>';
+    } else {
+        mobileMenu.classList.add('active');
+        menuToggle.innerHTML = '<span style="transform: rotate(45deg) translate(5px, 5px);"></span><span style="opacity: 0;"></span><span style="transform: rotate(-45deg) translate(7px, -6px);"></span>';
+    }
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbar = document.querySelector('.navbar');
+
+    if (!navbar.contains(event.target) && mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
+});
+
+// Close mobile menu on window resize if desktop size
+window.addEventListener('resize', function() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
 });
 </script>
 
