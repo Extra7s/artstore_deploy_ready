@@ -15,7 +15,7 @@ $messages = mysqli_fetch_row(mysqli_query($conn,"SELECT COUNT(*) FROM messages")
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard | ArtfyCanvas</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style_organized.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -65,9 +65,48 @@ new Chart(document.getElementById('stats'),{
  data:{
   labels:['Products','Orders','Users','Messages'],
   datasets:[{
+    label: 'Count',
     data:[<?= $products ?>,<?= $orders ?>,<?= $users ?>,<?= $messages ?>],
-    backgroundColor:['#000','#555','#999','#ccc']
+    backgroundColor:['#f4b400','#ff6b35','#2c3e50','#6c757d'],
+    borderColor:['#e6a800','#ff5722','#1a252f','#5a6268'],
+    borderWidth: 2,
+    borderRadius: 6,
+    borderSkipped: false
   }]
+ },
+ options: {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+   legend: {
+    display: false
+   }
+  },
+  scales: {
+   y: {
+    beginAtZero: true,
+    grid: {
+     color: '#e1e5e9'
+    },
+    ticks: {
+     color: '#2c3e50',
+     font: {
+      weight: '600'
+     }
+    }
+   },
+   x: {
+    grid: {
+     display: false
+    },
+    ticks: {
+     color: '#2c3e50',
+     font: {
+      weight: '600'
+     }
+    }
+   }
+  }
  }
 });
 </script>

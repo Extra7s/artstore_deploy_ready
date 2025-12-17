@@ -33,7 +33,7 @@ if (!$order) {
 <head>
     <meta charset="UTF-8">
     <title>Payment | ArtfyCanvas</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style_organized.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 </head>
@@ -41,15 +41,36 @@ if (!$order) {
 
 <!-- ================= NAVBAR ================= -->
 <header class="navbar">
-    <div class="logo">ArtfyCanvas</div>
+    <div class="logo">
+        <i class="fas fa-palette"></i>
+        ArtfyCanvas
+    </div>
     <nav>
-        <a href="index.php">Home</a>
-        <a href="shop.php">Shop</a>
-        <a href="about.php">About</a>
-        <a href="contact.php">Contact</a>
-        <a href="cart.php">Cart</a>
-        <a href="logout.php">Logout</a>
+        <a href="index.php"><i class="fas fa-home"></i> Home</a>
+        <a href="shop.php"><i class="fas fa-store"></i> Shop</a>
+        <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
+        <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a>
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <div class="menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" onclick="toggleMobileMenu()">&times;</div>
+        <a href="index.php" onclick="toggleMobileMenu()"><i class="fas fa-home"></i> Home</a>
+        <a href="shop.php" onclick="toggleMobileMenu()"><i class="fas fa-store"></i> Shop</a>
+        <a href="about.php" onclick="toggleMobileMenu()"><i class="fas fa-info-circle"></i> About</a>
+        <a href="contact.php" onclick="toggleMobileMenu()"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="cart.php" onclick="toggleMobileMenu()"><i class="fas fa-shopping-cart"></i> Cart</a>
+        <a href="logout.php" onclick="toggleMobileMenu()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
 </header>
 
 <section class="payment-section">
@@ -138,6 +159,39 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         checkout.show({amount: <?= $pending_order['total'] * 100 ?>});
     });
+});
+
+// Mobile Menu Functions
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.querySelector('.menu-toggle');
+
+    if (mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+    } else {
+        mobileMenu.classList.add('active');
+        menuToggle.classList.add('active');
+    }
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbar = document.querySelector('.navbar');
+
+    if (!navbar.contains(event.target) && mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
+});
+
+// Close mobile menu on window resize if desktop size
+window.addEventListener('resize', function() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+    }
 });
 </script>
 

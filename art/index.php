@@ -11,7 +11,7 @@ require_once "includes/db.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style_organized.css">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -180,12 +180,30 @@ require_once "includes/db.php";
     <h2>Why Choose ArtfyCanvas?</h2>
 
     <div class="features">
-        <div class="feature">🎨 100% Original Art</div>
-        <div class="feature">💳 Secure Khalti Payment</div>
-        <div class="feature">🚚 Safe & Fast Delivery</div>
-        <div class="feature">⭐ Trusted Artists</div>
-        <div class="feature">🔒 Quality Guarantee</div>
-        <div class="feature">📞 24/7 Customer Support</div>
+        <div class="feature">
+            <i class="fas fa-palette"></i>
+            <span>100% Original Art</span>
+        </div>
+        <div class="feature">
+            <i class="fas fa-credit-card"></i>
+            <span>Secure Khalti Payment</span>
+        </div>
+        <div class="feature">
+            <i class="fas fa-shipping-fast"></i>
+            <span>Safe & Fast Delivery</span>
+        </div>
+        <div class="feature">
+            <i class="fas fa-star"></i>
+            <span>Trusted Artists</span>
+        </div>
+        <div class="feature">
+            <i class="fas fa-shield-alt"></i>
+            <span>Quality Guarantee</span>
+        </div>
+        <div class="feature">
+            <i class="fas fa-headset"></i>
+            <span>24/7 Customer Support</span>
+        </div>
     </div>
 </section>
 

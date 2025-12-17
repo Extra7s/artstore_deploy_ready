@@ -5,7 +5,7 @@
     <title>About Us | ArtfyCanvas</title>
     <meta name="description" content="Learn about ArtfyCanvas - your premier destination for original artworks from talented artists worldwide.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style_organized.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -106,32 +106,32 @@
     <h2>Why Choose ArtfyCanvas?</h2>
     <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon">🎨</div>
+            <div class="feature-icon"><i class="fas fa-palette"></i></div>
             <h3>Original Artworks</h3>
             <p>Every piece is handcrafted by talented artists, ensuring authenticity and uniqueness.</p>
         </div>
         <div class="feature-card">
-            <div class="feature-icon">👨‍🎨</div>
+            <div class="feature-icon"><i class="fas fa-user-friends"></i></div>
             <h3>Support Local Artists</h3>
             <p>Directly support independent artists and help them build sustainable creative careers.</p>
         </div>
         <div class="feature-card">
-            <div class="feature-icon">🚚</div>
+            <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
             <h3>Worldwide Shipping</h3>
             <p>Careful packaging and global shipping to ensure your artwork arrives safely.</p>
         </div>
         <div class="feature-card">
-            <div class="feature-icon">💳</div>
+            <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
             <h3>Secure Payments</h3>
             <p>Safe and secure payment processing with multiple payment options.</p>
         </div>
         <div class="feature-card">
-            <div class="feature-icon">🔒</div>
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
             <h3>Authenticity Guarantee</h3>
             <p>Every artwork comes with a certificate of authenticity and provenance.</p>
         </div>
         <div class="feature-card">
-            <div class="feature-icon">📞</div>
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
             <h3>24/7 Customer Support</h3>
             <p>Dedicated support team ready to assist with any questions or concerns.</p>
         </div>
@@ -143,25 +143,25 @@
     <p>The passionate individuals behind ArtfyCanvas who make it all possible.</p>
     <div class="team">
         <div class="team-member">
-            <div class="member-avatar">👩‍🎨</div>
+            <div class="member-avatar"><i class="fas fa-circle-user"></i></div>
             <h4>Sarah Johnson</h4>
             <p class="member-role">Founder & Chief Art Curator</p>
             <p class="member-bio">With over 15 years in the art world, Sarah curates our collection and ensures every piece meets our standards of excellence.</p>
         </div>
         <div class="team-member">
-            <div class="member-avatar">👨‍💼</div>
+            <div class="member-avatar"><i class="fas fa-circle-user"></i></div>
             <h4>Mike Chen</h4>
             <p class="member-role">Operations Manager</p>
             <p class="member-bio">Mike oversees our logistics and ensures smooth operations from artist onboarding to customer delivery.</p>
         </div>
         <div class="team-member">
-            <div class="member-avatar">👩‍💻</div>
+            <div class="member-avatar"><i class="fas fa-circle-user"></i></div>
             <h4>Emily Davis</h4>
             <p class="member-role">Lead Developer</p>
             <p class="member-bio">Emily builds and maintains our platform, ensuring a seamless experience for artists and collectors alike.</p>
         </div>
         <div class="team-member">
-            <div class="member-avatar">🎨</div>
+            <div class="member-avatar"><i class="fas fa-circle-user"></i></div>
             <h4>Alex Rodriguez</h4>
             <p class="member-role">Artist Relations</p>
             <p class="member-bio">Alex works directly with artists to help them showcase their work and grow their careers on our platform.</p>

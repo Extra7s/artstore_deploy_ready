@@ -13,9 +13,9 @@ if (!$art) {
     die("Artwork not found.");
 }
 
-// Recommendations: similar category
-$stmt = $conn->prepare("SELECT * FROM artworks WHERE category_id = ? AND id != ? ORDER BY RAND() LIMIT 4");
-$stmt->bind_param("ii", $art['category_id'], $id);
+// Recommendations: random artworks from all categories
+$stmt = $conn->prepare("SELECT * FROM artworks WHERE id != ? ORDER BY RAND() LIMIT 4");
+$stmt->bind_param("i", $id);
 $stmt->execute();
 $recResult = $stmt->get_result();
 ?>
@@ -26,7 +26,7 @@ $recResult = $stmt->get_result();
     <title><?= htmlspecialchars($art['title']) ?> | ArtfyCanvas</title>
     <meta name="description" content="<?= htmlspecialchars(substr($art['description'], 0, 160)) ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style_organized.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -97,52 +97,22 @@ $recResult = $stmt->get_result();
         </div>
 
         <div class="product-details">
-            <div class="product-header">
-                <h1><?= htmlspecialchars($art['title']) ?></h1>
-                <div class="product-meta">
-                    <span class="artist-info">
-                        <i class="fas fa-user"></i>
-                        By <strong><?= htmlspecialchars($art['artist']) ?></strong>
-                    </span>
-                    <span class="category-badge">
-                        <i class="fas fa-tag"></i>
-                        <?= htmlspecialchars($art['category_name']) ?>
-                    </span>
-                </div>
-            </div>
-
-            <div class="product-price">
-                <span class="current-price">Rs. <?= number_format($art['price'], 2) ?></span>
-            </div>
-
+            <h1 class="product-title"><?= htmlspecialchars($art['title']) ?></h1>
+            <p class="product-artist">by <?= htmlspecialchars($art['artist']) ?></p>
+            <div class="product-price">Rs. <?= number_format($art['price'], 2) ?></div>
             <div class="product-description">
-                <h3>About This Artwork</h3>
                 <p><?= htmlspecialchars($art['description']) ?></p>
             </div>
-
             <div class="product-specifications">
                 <h3>Specifications</h3>
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <span class="spec-label">Artist:</span>
-                        <span class="spec-value"><?= htmlspecialchars($art['artist']) ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Category:</span>
-                        <span class="spec-value"><?= htmlspecialchars($art['category_name']) ?></span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Medium:</span>
-                        <span class="spec-value">Oil on Canvas</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Year:</span>
-                        <span class="spec-value">2024</span>
-                    </div>
-                </div>
+                <ul class="specs-list">
+                    <li><strong>Artist:</strong> <?= htmlspecialchars($art['artist']) ?></li>
+                    <li><strong>Category:</strong> <?= htmlspecialchars($art['category_name']) ?></li>
+                    <li><strong>Medium:</strong> Oil on Canvas</li>
+                    <li><strong>Year:</strong> 2024</li>
+                </ul>
             </div>
-
-            <div class="purchase-section">
+            <div class="purchase-controls">
                 <div class="quantity-selector">
                     <label for="quantity">Quantity:</label>
                     <div class="quantity-controls">
@@ -151,38 +121,33 @@ $recResult = $stmt->get_result();
                         <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
                     </div>
                 </div>
-
                 <form action="actions/add_to_cart.php" method="POST" class="add-to-cart-form">
                     <input type="hidden" name="artwork_id" value="<?= $art['id'] ?>">
                     <input type="hidden" name="qty" value="1" id="hidden-qty">
-                    <button type="submit" class="btn-primary">
+                    <button type="submit" class="btn-add-to-cart">
                         <i class="fas fa-shopping-cart"></i>
                         Add to Cart
                     </button>
                 </form>
-
-                <div class="action-buttons">
-                    <button class="btn-secondary" onclick="toggleWishlist()">
+                <div class="secondary-actions">
+                    <button class="btn-icon" onclick="toggleWishlist()" title="Add to Wishlist">
                         <i class="far fa-heart"></i>
-                        Add to Wishlist
                     </button>
-                    <button class="btn-secondary" onclick="shareProduct()">
+                    <button class="btn-icon" onclick="shareProduct()" title="Share">
                         <i class="fas fa-share"></i>
-                        Share
                     </button>
                 </div>
             </div>
-
-            <div class="product-features">
-                <div class="feature">
+            <div class="trust-badges">
+                <div class="badge">
                     <i class="fas fa-shipping-fast"></i>
                     <span>Free Shipping</span>
                 </div>
-                <div class="feature">
+                <div class="badge">
                     <i class="fas fa-undo"></i>
                     <span>30-Day Returns</span>
                 </div>
-                <div class="feature">
+                <div class="badge">
                     <i class="fas fa-certificate"></i>
                     <span>Certificate of Authenticity</span>
                 </div>
@@ -194,7 +159,7 @@ $recResult = $stmt->get_result();
     <div class="related-products">
         <div class="section-header">
             <h2>You Might Also Like</h2>
-            <p>Discover more beautiful artworks from our collection</p>
+            <p>Discover more beautiful artworks from our entire collection</p>
         </div>
         <div class="art-grid">
             <?php while ($rec = $recResult->fetch_assoc()):
