@@ -56,6 +56,22 @@ if (isset($_SESSION['user'])) {
         <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
         <?php if(isset($_SESSION['user'])): ?>
             <a href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <?php
+            // Get pending orders count
+            $pending_count = 0;
+            $stmt = $conn->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ? AND status = 'pending'");
+            $stmt->bind_param("i", $_SESSION['user']['id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $pending_count = $result->fetch_assoc()['count'];
+            $stmt->close();
+            ?>
+            <a href="my_orders.php" class="notification-bell">
+                <i class="fas fa-bell"></i>
+                <?php if($pending_count > 0): ?>
+                <span class="notification-count"><?= $pending_count ?></span>
+                <?php endif; ?>
+            </a>
             <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php else: ?>
             <a href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -79,6 +95,12 @@ if (isset($_SESSION['user'])) {
 
         <?php if(isset($_SESSION['user'])): ?>
             <a href="cart.php" onclick="toggleMobileMenu()"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="my_orders.php" onclick="toggleMobileMenu()" class="notification-bell">
+                <i class="fas fa-bell"></i> My Orders
+                <?php if($pending_count > 0): ?>
+                <span class="notification-count"><?= $pending_count ?></span>
+                <?php endif; ?>
+            </a>
             <a href="logout.php" onclick="toggleMobileMenu()"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php else: ?>
             <a href="login.php" onclick="toggleMobileMenu()"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -107,14 +129,14 @@ if (isset($_SESSION['user'])) {
                                 <button type="submit" name="action" value="increase">+</button>
                             </form>
                         </div>
-                        <p>Price: $<?= number_format($item['subtotal'], 2) ?></p>
+                        <p>Price: Rs. <?= number_format($item['subtotal'], 2) ?></p>
                     </div>
                     <button class="remove-btn" onclick="window.location.href='actions/remove_from_cart.php?id=<?= $item['artwork']['id'] ?>'">Remove</button>
                 </div>
             <?php endforeach; ?>
         </div>
         <div class="cart-total">
-            <h3>Total: <span class="total-price">$<?= number_format($total, 2) ?></span></h3>
+            <h3>Total: <span class="total-price">Rs. <?= number_format($total, 2) ?></span></h3>
             <a href="checkout.php" class="checkout-btn">Proceed to Checkout</a>
         </div>
     <?php endif; ?>

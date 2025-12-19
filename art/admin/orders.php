@@ -5,10 +5,9 @@ include 'admin_guard.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
     $order_id = intval($_POST['order_id']);
     $status = $_POST['status'];
-    $payment_status = $_POST['payment_status'];
 
-    $stmt = $conn->prepare("UPDATE orders SET status = ?, payment_status = ? WHERE id = ?");
-    $stmt->bind_param("ssi", $status, $payment_status, $order_id);
+    $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE id = ?");
+    $stmt->bind_param("si", $status, $order_id);
     $stmt->execute();
     $stmt->close();
 
@@ -145,6 +144,11 @@ $orders_result = $stmt->get_result();
             margin-top: 15px;
         }
 
+        .status-form label {
+            font-weight: 500;
+            color: #333;
+        }
+
         .status-form select {
             padding: 8px 12px;
             border: 1px solid #ddd;
@@ -275,6 +279,11 @@ $orders_result = $stmt->get_result();
                             <div>
                                 <strong>Payment Method:</strong> <?= htmlspecialchars($order['payment_method'] ?: 'Not specified') ?>
                             </div>
+                            <?php if ($order['khalti_token']): ?>
+                            <div>
+                                <strong>Khalti Transaction ID:</strong> <?= htmlspecialchars($order['khalti_token']) ?>
+                            </div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="order-status">
@@ -321,15 +330,11 @@ $orders_result = $stmt->get_result();
 
                         <form method="POST" class="status-form">
                             <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
-                            <select name="status">
+                            <label for="status-<?= $order['id'] ?>">Update Order Status:</label>
+                            <select name="status" id="status-<?= $order['id'] ?>">
                                 <option value="pending" <?= $order['status'] === 'pending' ? 'selected' : '' ?>>Pending</option>
                                 <option value="completed" <?= $order['status'] === 'completed' ? 'selected' : '' ?>>Completed</option>
                                 <option value="cancelled" <?= $order['status'] === 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                            </select>
-                            <select name="payment_status">
-                                <option value="pending" <?= $order['payment_status'] === 'pending' ? 'selected' : '' ?>>Pending</option>
-                                <option value="paid" <?= $order['payment_status'] === 'paid' ? 'selected' : '' ?>>Paid</option>
-                                <option value="failed" <?= $order['payment_status'] === 'failed' ? 'selected' : '' ?>>Failed</option>
                             </select>
                             <button type="submit" name="update_status">
                                 <i class="fas fa-save"></i> Update Status
@@ -352,7 +357,8 @@ $orders_result = $stmt->get_result();
 <script>
 function toggleOrderDetails(orderId) {
     const details = document.getElementById('order-details-' + orderId);
-    const button = details.previousElementSibling.querySelector('.toggle-details');
+    const header = details.previousElementSibling.previousElementSibling;
+    const button = header.querySelector('.toggle-details');
     const icon = button.querySelector('i');
 
     if (details.classList.contains('order-collapsed')) {

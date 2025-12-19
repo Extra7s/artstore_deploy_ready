@@ -1,0 +1,1 @@
+'Number of artworks: ' . $result- . PHP_EOL;

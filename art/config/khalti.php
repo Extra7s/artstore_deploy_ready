@@ -1,10 +1,12 @@
 <?php
 // Khalti Payment Gateway Configuration
-// For production, replace with your actual Khalti API credentials
+// IMPORTANT: Replace these with your actual Khalti API credentials from https://khalti.com/
+// For testing: Get keys from Khalti Dashboard > API Keys (Test Environment)
+// For production: Switch to Live Environment keys
 
-define('KHALTI_PUBLIC_KEY', 'test_public_key_dc74e0fd57cb46cd93832aee0a507256'); // Test public key
-define('KHALTI_SECRET_KEY', 'test_secret_key_24be8b0d31a3452cad5f9c5e42111979'); // Test secret key
-define('KHALTI_BASE_URL', 'https://a.khalti.com/api/v2/');
+define('KHALTI_PUBLIC_KEY', 'test_public_key_dc74e0fd57cb46cd93832aee0a3902341'); // Khalti test public key
+define('KHALTI_SECRET_KEY', '005b4907d71e47fda89f48181e03f865'); // Khalti test secret key
+define('KHALTI_BASE_URL', 'https://a.khalti.com/api/v2/');//https://khalti.com/api/v2/
 
 // Khalti API endpoints
 define('KHALTI_INITIATE_URL', KHALTI_BASE_URL . 'epayment/initiate/');

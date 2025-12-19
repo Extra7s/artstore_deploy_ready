@@ -35,7 +35,6 @@ if (!$order) {
     <title>Payment | ArtfyCanvas</title>
     <link rel="stylesheet" href="assets/css/style_organized.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 </head>
 <body>
 
@@ -80,19 +79,20 @@ if (!$order) {
         <div class="order-summary">
             <h3>Order Summary</h3>
             <p><strong>Order ID:</strong> #<?= $order_id ?></p>
-            <p><strong>Total Amount:</strong> NPR <?= number_format($pending_order['total'] * 130, 2) ?> (≈ $<?= number_format($pending_order['total'], 2) ?>)</p>
+            <p><strong>Total Amount:</strong> Rs. <?= number_format($pending_order['total'], 2) ?></p>
             <p><strong>Customer:</strong> <?= htmlspecialchars($pending_order['customer_name']) ?></p>
             <p><strong>Email:</strong> <?= htmlspecialchars($pending_order['customer_email']) ?></p>
         </div>
+
 
         <div class="payment-methods">
             <h3>Choose Payment Method</h3>
 
             <div class="payment-option">
-                <button id="khalti-payment-button" class="btn khalti-btn">
+                <a href="payment_initiate.php?order_id=<?= $order_id ?>" class="btn khalti-btn">
                     <img src="data:image/png;base64,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" alt="Khalti" class="khalti-logo">
                     Pay with Khalti
-                </button>
+                </a>
             </div>
 
             <div class="payment-info">
@@ -103,64 +103,6 @@ if (!$order) {
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const khaltiBtn = document.getElementById('khalti-payment-button');
-
-    // Khalti Checkout Configuration
-    const config = {
-        publicKey: '<?= KHALTI_PUBLIC_KEY ?>',
-        productIdentity: '<?= $order_id ?>',
-        productName: 'Art Purchase - Order #<?= $order_id ?>',
-        productUrl: '<?= WEBSITE_URL ?>product.php?id=1', // Generic product URL
-        amount: <?= $pending_order['total'] * 100 ?>, // Amount in paisa
-        eventHandler: {
-            onSuccess: function(payload) {
-                // Payment successful
-                console.log('Payment successful:', payload);
-
-                // Verify payment on server
-                fetch('khalti_payment.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'action=verify&pidx=' + payload.pidx
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.status === 'Completed') {
-                        // Payment verified, redirect to success page
-                        window.location.href = 'payment_success.php?order_id=<?= $order_id ?>&payment_id=' + payload.idx;
-                    } else {
-                        alert('Payment verification failed. Please contact support.');
-                        window.location.href = 'checkout.php';
-                    }
-                })
-                .catch(error => {
-                    console.error('Verification error:', error);
-                    alert('Payment verification failed. Please try again.');
-                    window.location.href = 'checkout.php';
-                });
-            },
-            onError: function(error) {
-                console.log('Payment failed:', error);
-                alert('Payment failed. Please try again.');
-            },
-            onClose: function() {
-                console.log('Payment widget closed');
-            }
-        },
-        paymentPreference: ["KHALTI", "EBANKING", "MOBILE_BANKING", "CONNECT_IPS", "SCT"],
-    };
-
-    const checkout = new KhaltiCheckout(config);
-
-    khaltiBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        checkout.show({amount: <?= $pending_order['total'] * 100 ?>});
-    });
-});
-
 // Mobile Menu Functions
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');

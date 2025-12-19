@@ -1,6 +1,6 @@
 -- Create database if not exists
-CREATE DATABASE IF NOT EXISTS art_marketplace;
-USE art_marketplace;
+CREATE DATABASE IF NOT EXISTS artstore;
+USE artstore;
 
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
@@ -87,3 +87,11 @@ INSERT IGNORE INTO users (name, email, password, role) VALUES ('Admin', 'admin@a
 
 -- Insert sample categories
 INSERT IGNORE INTO categories (name) VALUES ('Painting'), ('Sculpture'), ('Photography'), ('Digital Art');
+
+-- Insert sample artworks
+INSERT IGNORE INTO artworks (title, artist, price, image, description, category_id, medium, dimensions, year_created, availability) VALUES
+('Sunset Landscape', 'John Doe', 150.00, 'art1.jpg', 'A stunning oil painting depicting a vibrant sunset over rolling hills, capturing the warmth of the golden hour.', 1, 'Oil on Canvas', '24x30 inches', 2022, 'available'),
+('Abstract Sculpture', 'Jane Smith', 300.00, 'art2.jpg', 'A modern bronze sculpture featuring abstract forms that evoke movement and emotion, perfect for contemporary spaces.', 2, 'Bronze', '18x12x10 inches', 2021, 'available'),
+('Cityscape Photography', 'Mike Johnson', 120.00, 'art3.jpg', 'A high-contrast black and white photograph of a bustling city skyline at dusk, highlighting urban architecture.', 3, 'Digital Print', '20x16 inches', 2023, 'available'),
+('Digital Fantasy Art', 'Emily Davis', 200.00, 'art4.jpg', 'An imaginative digital artwork of a mystical forest with glowing creatures, created using advanced graphic software.', 4, 'Digital Print', '24x18 inches', 2024, 'available'),
+('Portrait Study', 'Robert Wilson', 180.00, 'art5.jpg', 'A detailed charcoal portrait capturing the essence of human expression and emotion in monochromatic tones.', 1, 'Charcoal on Paper', '18x24 inches', 2020, 'available');

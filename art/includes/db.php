@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = "";
-$db   = "art_marketplace";
+$pass = "root";
+$db   = "artstore";
 
 $conn = new mysqli($host, $user, $pass, $db);
 

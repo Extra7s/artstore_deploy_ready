@@ -1,7 +1,9 @@
 <?php
-session_start();
-require_once "../includes/db.php";
-require_once "../config/khalti.php";
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+require_once "includes/db.php";
+require_once "config/khalti.php";
 
 class KhaltiPayment {
     private $public_key;

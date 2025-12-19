@@ -36,6 +36,22 @@ require_once "includes/db.php";
 
         <?php if(isset($_SESSION['user'])): ?>
             <a href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <?php
+            // Get pending orders count
+            $pending_count = 0;
+            $stmt = $conn->prepare("SELECT COUNT(*) as count FROM orders WHERE user_id = ? AND status = 'pending'");
+            $stmt->bind_param("i", $_SESSION['user']['id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $pending_count = $result->fetch_assoc()['count'];
+            $stmt->close();
+            ?>
+            <a href="my_orders.php" class="notification-bell">
+                <i class="fas fa-bell"></i>
+                <?php if($pending_count > 0): ?>
+                <span class="notification-count"><?= $pending_count ?></span>
+                <?php endif; ?>
+            </a>
             <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php else: ?>
             <a href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a>

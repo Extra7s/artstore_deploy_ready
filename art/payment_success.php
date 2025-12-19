@@ -5,7 +5,8 @@ require_once "config/khalti.php";
 require_once "khalti_payment.php";
 
 $order_id = intval($_GET['order_id'] ?? 0);
-$payment_id = $_GET['payment_id'] ?? null;
+$pidx = $_GET['pidx'] ?? null;
+$status = $_GET['status'] ?? null;
 
 $message = "";
 $success = false;
@@ -18,19 +19,19 @@ if ($order_id && isset($_SESSION['user'])) {
     $res = $stmt->get_result();
     $order = $res->fetch_assoc();
 
-    if ($order) {
+if ($order) {
         if ($order['payment_status'] == 'paid') {
             $message = "Order #$order_id has been successfully completed!";
             $success = true;
-        } elseif ($payment_id) {
+        } elseif ($pidx && $status === 'Completed') {
             // Verify payment with Khalti
             $khalti = new KhaltiPayment();
-            $verification = $khalti->verifyPayment($payment_id);
+            $verification = $khalti->verifyPayment($pidx);
 
             if ($verification['success'] && $verification['status'] === 'Completed') {
                 // Update order status to paid
                 $stmt = $conn->prepare("UPDATE orders SET payment_status = 'paid', khalti_token = ? WHERE id = ?");
-                $stmt->bind_param("si", $payment_id, $order_id);
+                $stmt->bind_param("si", $pidx, $order_id);
                 $stmt->execute();
 
                 // Clear cart
@@ -47,6 +48,8 @@ if ($order_id && isset($_SESSION['user'])) {
             } else {
                 $message = "Payment verification failed. Please contact support with order ID #$order_id.";
             }
+        } elseif ($status === 'Failed' || $status === 'Pending') {
+            $message = "Payment was not completed. Status: $status. Please try again.";
         } else {
             $message = "Payment not completed. Please try again.";
         }
@@ -106,8 +109,8 @@ if ($order_id && isset($_SESSION['user'])) {
                 <div class="order-details">
                     <h3>Order Details</h3>
                     <p><strong>Order ID:</strong> #<?= $order_id ?></p>
-                    <?php if ($payment_id): ?>
-                        <p><strong>Payment ID:</strong> <?= htmlspecialchars($payment_id) ?></p>
+                    <?php if ($pidx): ?>
+                        <p><strong>Payment ID:</strong> <?= htmlspecialchars($pidx) ?></p>
                     <?php endif ?>
                 </div>
                 <a href="index.php" class="btn">Continue Shopping</a>

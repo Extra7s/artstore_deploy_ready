@@ -799,6 +799,89 @@ section h2 {
     animation: fadeIn 0.5s ease-out;
 }
 
+/* ================= ORDERS / MY ORDERS PAGE ================= */
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.order-card {
+    background: var(--secondary-bg);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 10px 30px var(--shadow-light);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--neutral-gray);
+    padding-bottom: 8px;
+}
+
+.order-title { font-weight: 700; color: var(--text-primary); }
+.order-date { color: var(--text-muted); font-size: 14px; }
+
+.order-summary { display: flex; gap: 12px; flex-wrap: wrap; }
+.summary-item { min-width: 160px; }
+.summary-item .label { display:block; color:var(--text-muted); font-size:13px; }
+.summary-item .value { font-weight:600; color:var(--text-primary); }
+
+.status-badge { padding:6px 10px; border-radius:12px; font-weight:600; font-size:13px; display:inline-block; }
+.status-pending { background: #fff4e6; color:#b45309; }
+.status-completed { background:#e6fffa; color:#065f46; }
+.status-cancelled { background:#fff0f0; color:#9b2c2c; }
+
+.payment-paid { background:#e6fffa; color:#065f46; }
+.payment-unpaid { background:#fff7f0; color:#92400e; }
+
+.order-details { display: grid; grid-template-columns: 1fr; gap:12px; }
+.detail-section h4 { margin-bottom:8px; color:var(--text-primary); }
+
+.items-list { display:flex; flex-direction:column; gap:10px; }
+.item-row { display:flex; gap:12px; align-items:center; }
+.item-image { width:72px; height:72px; object-fit:cover; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+.item-row h5 { margin-bottom:6px; font-size:15px; }
+
+.order-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:6px; }
+.alert { padding:12px 16px; border-radius:10px; margin-bottom:16px; }
+.alert-success { background:#e6ffed; color:#065f46; border:1px solid rgba(6,95,70,0.08); }
+.alert-error { background:#fff4f4; color:#9b2c2c; border:1px solid rgba(155,44,44,0.06); }
+
+.btn-sm { padding:8px 12px; border-radius:10px; background:var(--accent-primary); color:#000; text-decoration:none; display:inline-block; }
+.btn-sm:hover { background:#e6a800; }
+
+/* Buttons & Pills */
+.btn { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:600; }
+.btn-outline { background:transparent; border:1px solid var(--neutral-gray); color:var(--text-primary); }
+.btn-outline:hover { border-color:var(--accent-primary); color:var(--accent-primary); }
+.btn-danger { background:#ff6b6b; color:#fff; border:none; padding:10px 14px; border-radius:10px; }
+.btn-danger:hover { filter:brightness(0.95); }
+
+.payment-pill { margin-left:8px; padding:4px 8px; border-radius:8px; font-size:12px; display:inline-flex; align-items:center; gap:6px; }
+.payment-pill.paid { background:#e6ffed; color:#065f46; }
+.payment-pill.unpaid { background:#fff7e6; color:#92400e; }
+
+.muted { color:var(--text-muted); font-size:13px; margin:4px 0; }
+.item-subtotal { font-weight:600; margin-top:6px; }
+
+.order-footer { display:flex; justify-content:space-between; align-items:center; gap:16px; border-top:1px dashed var(--neutral-gray); padding-top:12px; }
+.order-totals { text-align:right; min-width:140px; }
+.totals-row { display:flex; justify-content:space-between; gap:8px; color:var(--text-primary); }
+.order-card:hover { transform: translateY(-6px); transition: transform 0.18s ease; }
+
+@media (max-width: 720px) {
+    .order-footer { flex-direction:column; align-items:flex-start; }
+    .order-totals { width:100%; text-align:left; }
+    .order-actions { width:100%; justify-content:flex-start; }
+}
+
+
 /* Product Details */
 .product-details {
     display: flex;
@@ -3027,6 +3110,68 @@ section h2 {
         align-self: center;
     }
 
+/* ================= Orders pages (my_orders / order_view) ================= */
+.orders-toolbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:22px; }
+.orders-toolbar .toolbar-left h3 { margin:0; font-size:20px; color:var(--text-primary); }
+.orders-toolbar .toolbar-left p { margin:0; font-size:13px; color:var(--text-muted); }
+.toolbar-right .filter { padding:8px 12px; border-radius:10px; background:transparent; color:var(--text-primary); text-decoration:none; border:1px solid transparent; margin-left:8px; }
+.toolbar-right .filter.active { background:var(--accent-primary); color:#000; }
+
+.orders-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(360px,1fr)); gap:20px; }
+.order-card {
+    background: var(--secondary-bg);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+.order-header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.order-title { font-weight:700; font-size:16px; color:var(--text-primary); }
+.order-meta { color:var(--text-muted); font-size:13px; }
+.order-badges { display:flex; gap:8px; align-items:center; }
+.status-badge { padding:6px 10px; border-radius:12px; font-weight:600; font-size:13px; }
+.status-pending { background:#fff4e6; color:#b45309; }
+.status-completed { background:#e6fffa; color:#065f46; }
+.status-cancelled { background:#fff0f0; color:#9b2c2c; }
+.payment-pill { display:inline-flex; gap:8px; align-items:center; padding:4px 8px; border-radius:8px; font-size:12px; }
+.payment-pill.paid { background:#e6ffed; color:#065f46; }
+.payment-pill.unpaid { background:#fff7e6; color:#92400e; }
+
+.order-summary { display:flex; justify-content:space-between; align-items:center; gap:12px; padding-top:6px; }
+.order-summary .value { font-weight:700; color:var(--text-primary); }
+
+.order-details { background:transparent; padding-top:6px; }
+.order-box { background:var(--primary-bg); padding:14px; border-radius:12px; box-shadow: 0 6px 18px rgba(0,0,0,0.03); }
+.order-box.full { grid-column: 1 / -1; }
+.order-box h3 { margin:0 0 8px 0; font-size:16px; }
+
+.items-list { display:flex; flex-direction:column; gap:12px; }
+.item-row { display:flex; gap:12px; align-items:center; }
+.item-image { width:80px; height:80px; object-fit:cover; border-radius:8px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+.item-details h5 { margin:0 0 6px 0; font-size:15px; }
+.muted { color:var(--text-muted); }
+.item-subtotal { font-weight:700; margin-top:6px; }
+
+.order-footer { display:flex; justify-content:space-between; align-items:center; gap:12px; border-top:1px dashed var(--neutral-gray); padding-top:12px; }
+.order-actions { display:flex; gap:8px; align-items:center; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:600; }
+.btn-outline { background:transparent; border:1px solid var(--neutral-gray); color:var(--text-primary); }
+.btn-outline:hover { border-color:var(--accent-primary); color:var(--accent-primary); }
+.btn-danger { background:#ff6b6b; color:#fff; border:none; }
+
+.alert { padding:12px 16px; border-radius:10px; margin-bottom:16px; }
+.alert-success { background:#e6ffed; color:#065f46; border:1px solid rgba(6,95,70,0.08); }
+.alert-error { background:#fff4f4; color:#9b2c2c; border:1px solid rgba(155,44,44,0.06); }
+
+@media (max-width: 720px) {
+    .orders-grid { grid-template-columns: 1fr; }
+    .order-header { flex-direction:column; align-items:flex-start; gap:6px; }
+    .order-footer { flex-direction:column; align-items:flex-start; gap:8px; }
+}
+
+
     /* CTA section responsive */
     .cta-section {
         padding: 60px 4%;
@@ -3093,4 +3238,31 @@ section h2 {
     .error-message {
         padding: 20px;
     }
+}
+
+/* Notification Bell */
+.notification-bell {
+    position: relative;
+    display: inline-block;
+    color: #333;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.notification-bell i {
+    font-size: 18px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 18px;
+    text-align: center;
 }
